@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from db import session
 from db.models import User, Promotion
 from db.bootstrap import bootstrap_data
+from templating import render_template
 from config import MailConfig
 from static_mail import StaticMail
 
@@ -22,12 +23,14 @@ if __name__ == '__main__':
     new_promo = session.query(Promotion).first()
 
     mail.send_message(
-        name='use_my_service',
         recipients=[user.email],
-        context={
-            'contact': user,
-            'promo': new_promo
-        }
+        subject='The next cool service at {promo_percent_off}% off!'.format(promo_percent_off=new_promo.percent_off),
+        plain_text=('Hey {contact_full_name}, try out our service by visiting: '
+                    'https://coolservice.com/. You could get {promo_percent_off}'
+                    '% off if you start soon! This message is short to encourage '
+                    'you to read your emails in HTML.').format(
+                        contact_full_name=user.full_name,
+                        promo_percent_off=new_promo.percent_off
+                    ),
+        html=render_template('use_my_service.html', contact=user, promo=new_promo)
     )
-
-
