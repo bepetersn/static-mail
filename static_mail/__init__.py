@@ -12,7 +12,7 @@ class StaticMail(object):
             context--where that directory is should be
             configurable.
             2) Load the subject and text for the given template
-            name, as defined in $EMAIL_DIR/emails.yaml. Each is
+            name, as defined in <EMAIL_DIR>/emails.yaml. Each is
             turned into a template and built with the given
             context as well.
             3) The final subject, plain_text, and html are used
