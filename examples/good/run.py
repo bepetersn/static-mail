@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 from db import session
 from db.models import User, Promotion
-from bootstrap import bootstrap_data
+from db.bootstrap import bootstrap_data
 from config import MailConfig
 from static_mail import StaticMail
 
