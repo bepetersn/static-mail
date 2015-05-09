@@ -21,7 +21,7 @@ if __name__ == '__main__':
     user = session.query(User).first()
     new_promo = session.query(Promotion).first()
 
-    mail.send_email_by_name(
+    mail.send_message(
         name='use_my_service',
         recipients=[user.email],
         context={
