@@ -32,5 +32,5 @@ if __name__ == '__main__':
                         contact_full_name=user.full_name,
                         promo_percent_off=new_promo.percent_off
                     ),
-        html=render_template('use_my_service.html', contact=user, promo=new_promo)
+        html=render_template('use_my_service.msg', contact=user, promo=new_promo)
     )

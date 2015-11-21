@@ -1,16 +1,19 @@
-
+import unittest.mock as mock
+from .message_loader import MessageLoader
+from simple_mail import Mail
 
 class StaticMail(object):
 
-    def __init__(self, config_object):
+    def __init__(self, config, logger=None):
         """
-        Store config for the mail server, the location of email
-        templates, the location of the `emails.yaml` file, etc.
+        Store config for the mail server, and the location 
+        of email templates.
 
         """
 
-        print("Got config info: ")
-        print config_object.__config_store__
+        self.config = config
+        self.mail = Mail(config)
+        self.logger = logger if logger is not None else mock.Mock()
 
     def send_email_by_name(self, name, recipients, context=None):
         """
@@ -19,32 +22,12 @@ class StaticMail(object):
             context--where that directory is should be
             configurable.
             2) Load the subject and text for the given template
-            name, as defined in <EMAIL_DIR>/emails.yaml. Each is
+            name, as defined in <EMAIL_DIR>/use_my_service.msg. Each is
             turned into a template and built with the given
             context as well.
 
         """
 
-        print('build email with name: {}'.format(name))
-        print('use context: {}'.format(context))
-        return self
-
-        #subject = self.get_subject_somehow()
-        #html = self.get_html_somehow()
-        #plain_text = self.get_plain_text_somehow()
-        #send_message(recipients, subject, plain_text, html)
-
-    def send_message(self, recipients, subject, plain_text, html):
-        """
-        The final subject, plain_text, and html are used
-        to send an email message. Flask-Mail's Message class
-        has a nice interface, we will probably make our
-        interface compatible with that to the extent possible.
-
-        """
-
-        print('send to recipients: {}'.format(recipients))
-        print('with subject: {}'.format(subject))
-        print('with plain_text: {}'.format(plain_text))
-        print('with html: {}...'.format(html[:200]))
-        return self
+        message = MessageLoader.get_message(name)
+        message.render(**context)
+        self.mail.reply(recipients, **message)
