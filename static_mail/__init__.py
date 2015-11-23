@@ -17,7 +17,7 @@ class StaticMail(object):
         self.config = config
         self.mail = mail.Mail(config)
         self.env = MessageEnvironment(loader=DynamicLoader(
-            self.config.TEMPLATE_DIR
+            self.config.MESSAGE_DIR
         ))
         self.logger = logger if logger is not None else mock.Mock()
 
@@ -35,4 +35,7 @@ class StaticMail(object):
         """
 
         template = self.env.get_template('{}.msg'.format(name))
-        self.mail.reply(recipients, **template.render(**context))
+        if template is not None:
+            self.mail.reply(recipients, **template.render(**context))
+        else:
+            print('couldn\'t render a template.')
