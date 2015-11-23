@@ -1,6 +1,6 @@
 
 """
-message_template.py
+template.py
 
 A small module that provides an interface compatible with Flask's render_template.
 

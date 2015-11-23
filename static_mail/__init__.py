@@ -1,8 +1,8 @@
 import simple_mail as mail
 import unittest.mock as mock
-from jinja2 import Environment
-from .message_loader import DynamicLoader
-from .message_template import MessageTemplate
+from .environment import MessageEnvironment
+from .loader import DynamicLoader
+from .template import MessageTemplate
 
 
 class StaticMail(object):
@@ -16,7 +16,7 @@ class StaticMail(object):
 
         self.config = config
         self.mail = mail.Mail(config)
-        self.env = Environment(loader=DynamicLoader(
+        self.env = MessageEnvironment(loader=DynamicLoader(
             self.config.TEMPLATE_DIR
         ))
         self.logger = logger if logger is not None else mock.Mock()
