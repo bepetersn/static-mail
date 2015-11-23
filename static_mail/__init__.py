@@ -1,6 +1,9 @@
+import simple_mail as mail
 import unittest.mock as mock
-from .message_loader import MessageLoader
-from simple_mail import Mail
+from jinja2 import Environment
+from .message_loader import DynamicLoader
+from .message_template import MessageTemplate
+
 
 class StaticMail(object):
 
@@ -12,7 +15,10 @@ class StaticMail(object):
         """
 
         self.config = config
-        self.mail = Mail(config)
+        self.mail = mail.Mail(config)
+        self.env = Environment(loader=DynamicLoader(
+            self.config.TEMPLATE_DIR
+        ))
         self.logger = logger if logger is not None else mock.Mock()
 
     def send_email_by_name(self, name, recipients, context=None):
@@ -28,6 +34,5 @@ class StaticMail(object):
 
         """
 
-        message = MessageLoader.get_message(name)
-        message.render(**context)
-        self.mail.reply(recipients, **message)
+        template = self.env.get_template('{}.msg'.format(name))
+        self.mail.reply(recipients, **template.render(**context))

@@ -1,28 +1,23 @@
-from jinja2 import Template
+import bunch
 
+SUB_TEMPLATES = {
+    'subject',
+    'text',
+    'html'
+}
 
 class MessageTemplate:
-    """
-    A message_template encapsulates a set of three templates:
-        - subject
-        - plain_text
-        - html
 
-    A message_template can be rendered with a given context.
+    def __init__(self, env, sub_templates):
+        self.sub_templates = sub_templates
+        self.env = env
 
-    """
-
-    TEMPLATES = ('subject', 'plain_text', 'html')
-
-    def __init__(self, subject, plain_text, html):
-        self._subject = subject
-        self._plain_text = plain_text
-        self._html = html
-
-    def get_sub_template(self, name):
-        return Template(getattr(self, '_{0}'.format(name)))
+    def render_part(self, name, **context):
+        return self.env.get_template(name).render(**context)
 
     def render(self, **context):
-        for template_name in self.TEMPLATES:
-
-            template.render(**context)
+        with self.env.loader.add_templates(self.sub_templates):
+            values = bunch.Bunch()
+            for name in SUB_TEMPLATES:
+                values[name] = self.render_part(name, **context)
+            return values
