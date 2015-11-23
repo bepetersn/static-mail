@@ -4,14 +4,14 @@ from __future__ import unicode_literals
 from db import session
 from db.models import User, Promotion
 from db.bootstrap import bootstrap_data
-from config import MailConfig
+from config import Config
 from static_mail import StaticMail
 
 
 if __name__ == '__main__':
 
     # do init
-    config = MailConfig()
+    config = Config()
     mail = StaticMail(config)
 
     # create bootstrap data
