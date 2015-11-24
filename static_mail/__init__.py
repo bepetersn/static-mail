@@ -9,8 +9,8 @@ class StaticMail(object):
 
     def __init__(self, config, logger=None):
         """
-        Store config for the mail server, and the location 
-        of email templates.
+        Store config for the mail server,
+        and the location of email templates.
 
         """
 
@@ -24,13 +24,10 @@ class StaticMail(object):
     def send_email_by_name(self, name, recipients, context=None):
         """
             1) Build the email template of `name`, as found
-            under the emails directory, with the given
-            context--where that directory is should be
-            configurable.
-            2) Load the subject and text for the given template
-            name, as defined in <EMAIL_DIR>/use_my_service.msg. Each is
-            turned into a template and built with the given
-            context as well.
+            under the configured message directory.
+            2) Load and render the subject, text and HTML,
+            as defined in <EMAIL_DIR>/use_my_service.msg,
+            with the given context.
 
         """
 

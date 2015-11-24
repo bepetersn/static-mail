@@ -22,10 +22,10 @@ if __name__ == '__main__':
     user = session.query(User).first()
     new_promo = session.query(Promotion).first()
 
-    mail.send_message(
-        recipients=[user.email],
+    mail.reply(
+        to=[user.email],
         subject='The next cool service at {promo_percent_off}% off!'.format(promo_percent_off=new_promo.percent_off),
-        plain_text=('Hey {contact_full_name}, try out our service by visiting: '
+        text=('Hey {contact_full_name}, try out our service by visiting: '
                     'https://coolservice.com/. You could get {promo_percent_off}'
                     '% off if you start soon! This message is short to encourage '
                     'you to read your emails in HTML.').format(
