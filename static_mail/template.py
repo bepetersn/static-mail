@@ -26,14 +26,13 @@ class MessageTemplate:
         Call this method with a given sub-template's
         name and the context to render it.
 
-        Works by adding the sub-templates to the
+        Works by adding our sub-templates to the
         loader's search path just-in-time. This
         has an advantage over `Template.from_string`
         loading in that it supports base templates.
 
         """
-        with self.env.loader.add_templates(self.sub_templates):
-            return self.env.get_template(name).render(**context)
+        return self.env.get_template(name).render(**context)
 
     def render(self, **context):
         """
@@ -43,6 +42,7 @@ class MessageTemplate:
 
         """
         values = bunch.Bunch()
-        for name in list(self.sub_templates.keys()):
-            values[name] = self.render_part(name, **context)
-        return values
+        with self.env.loader.add_templates(self.sub_templates):
+            for name in list(self.sub_templates.keys()):
+                values[name] = self.render_part(name, **context)
+            return values
