@@ -27,7 +27,7 @@ class MessageEnvironment(Environment):
             return super(MessageEnvironment, self).get_template(name, parent, globals)
         else:
 
-            with open(os.path.join(self.loader.templates_dir, name)) as f:
+            with open(os.path.join(self.loader.search_path, name)) as f:
                 try:
                     parser = SimpleConfigParser()
                     parser.read_file(f)
