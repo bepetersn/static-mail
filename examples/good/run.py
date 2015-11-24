@@ -13,8 +13,6 @@ if __name__ == '__main__':
     # do init
     config = ExampleConfig()
     mail = StaticMail(config)
-
-    # create bootstrap data
     bootstrap_data()
 
     # act like we know why we're emailing people

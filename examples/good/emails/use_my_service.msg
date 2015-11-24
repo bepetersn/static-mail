@@ -1,7 +1,7 @@
 
 subject: 
 
-    The next cool service at {{ promo.percent_off }}!
+    The next cool service at {{ promo.percent_off }}% off!
 
 text:
 
