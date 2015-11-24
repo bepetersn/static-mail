@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import unicode_literals
+
 from db import session
 from db.models import User, Promotion
 from db.bootstrap import bootstrap_data
