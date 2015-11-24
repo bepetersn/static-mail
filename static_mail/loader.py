@@ -21,11 +21,11 @@ class DynamicLoader(ChoiceLoader):
 
     @property
     def extra(self):
-        return self.loaders[0].mapping
+        return self.loaders[1].mapping
 
     @extra.setter
     def extra(self, extra):
-        self.loaders[0].mapping = extra
+        self.loaders[1].mapping = extra
 
     @contextmanager
     def add_templates(self, templates):
