@@ -1,7 +1,7 @@
 
 from unittest import TestCase, mock
 from jinja2 import TemplateNotFound
-from static_mail import DynamicLoader
+from templated_mail import DynamicLoader
 
 
 class TestDynamicLoader(TestCase):

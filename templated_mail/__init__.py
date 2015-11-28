@@ -5,7 +5,7 @@ from .loader import DynamicLoader
 from .template import MessageTemplate
 
 
-class StaticMail(object):
+class TemplatedMail(object):
 
     def __init__(self, config, logger=None):
         """
@@ -26,7 +26,7 @@ class StaticMail(object):
             1) Build the email template of `name`, as found
             under the configured message directory.
             2) Load and render the subject, text and HTML,
-            as defined in <EMAIL_DIR>/use_my_service.msg,
+            as defined in <MESSAGE_DIR>/use_my_service.msg,
             with the given context.
 
         """
@@ -35,4 +35,4 @@ class StaticMail(object):
         if template is not None:
             self.mail.reply(recipients, **template.render(**context))
         else:
-            print('couldn\'t render a template.')
+            self.logger.error('couldn\'t render a template.')

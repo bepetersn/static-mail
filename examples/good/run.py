@@ -6,14 +6,14 @@ from db import session
 from db.models import User, Promotion
 from db.bootstrap import bootstrap_data
 from config import ExampleConfig
-from static_mail import StaticMail
+from templated_mail import TemplatedMail
 
 
 if __name__ == '__main__':
 
     # do init
     config = ExampleConfig()
-    mail = StaticMail(config)
+    mail = TemplatedMail(config)
     bootstrap_data()
 
     # act like we know why we're emailing people
@@ -28,5 +28,3 @@ if __name__ == '__main__':
             'promo': new_promo
         }
     )
-
-

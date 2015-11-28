@@ -10,7 +10,7 @@ class MailConfig(object):
   MAIL_USERNAME = 'me@myserver.com'
   MAIL_PASSWORD = 'mypassword'
 
-mail = StaticMail(MailConfig())
+mail = TemplatedMail(MailConfig())
 
 # act like we know why we're emailing people
 contact = session.query(Contact).first()
