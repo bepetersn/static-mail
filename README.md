@@ -28,19 +28,19 @@ mail.send_email_by_name(
 
 ```
 
-So where is the email? All we've provided is a name. Taking a look in the `use_my_service.msg` file, we have the answer:
+So where is the email? All we've provided is a name. Taking a look in the `emails/use_my_service.msg` file, we have the answer:
 
 ```
 subject:
 
-    'The next cool service at {{ promo.percent_off }}!'
+    The next cool service at {{ promo.percent_off }}!
 
 text:
 
-    'Hey {{ contact.full_name }}, try out our service by visiting:
+    Hey {{ contact.full_name }}, try out our service by visiting:
     https://coolservice.com/. You could get {{ promo.percent_off }}% off
     if you start soon! This message is short to encourage you to read your
-    emails in HTML.'
+    emails in HTML.
 
 html:
 
