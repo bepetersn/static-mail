@@ -1,22 +1,32 @@
 
 # Why This Project
 
-This project provides a simple interface for sending an email while keeping the email's definition--its text, subject, and html--out of the application logic as much as possible. The following code is roughly taken from `examples/good`:
+This project provides a simple interface for sending an email while keeping the email's definition
+--its text, subject, and html--out of the application logic as much as possible. The following code
+is taken from `examples/bad`, and represents what this package is intended to prevent. This kind of
+code is commonplace, in the author's experience:
+
 
 ```python
 
-# do init
-class MailConfig(object):
-  MAIL_USERNAME = 'me@myserver.com'
-  MAIL_PASSWORD = 'mypassword'
+mail.reply(
+    to=[user.email],
+    subject='The next cool service at {}% off!'.format(promo_percent_off=new_promo.percent_off),
+    text=('Hey {}, try out our service by visiting: '
+                'https://coolservice.com/. You could get {}'
+                '% off if you start soon! This message is short to encourage '
+                'you to read your emails in HTML.').format(
+                    user.full_name,
+                    new_promo.percent_off
+                ),
+    html=render_template('use_my_service.msg', contact=user, promo=new_promo)
+)
+```
 
-mail = TemplatedMail(MailConfig())
+Yuck. Let's try that again, but instead imagine an API that we want.
 
-# act like we know why we're emailing people
-contact = session.query(Contact).first()
-new_promo = session.query(Promotion).first()
+```python
 
-# send an email
 mail.send_email_by_name(
     name='use_my_service',
     recipients=[contact.email],
@@ -28,14 +38,15 @@ mail.send_email_by_name(
 
 ```
 
-So where is the email? All we've provided is a name. Taking a look in the `emails/use_my_service.msg` file, we have the answer:
+So where is the email? All we've provided is a name. Taking a look in the
+`emails/use_my_service.msg` file, we have the answer:
 
 ```
 subject:
 
     The next cool service at {{ promo.percent_off }}!
 
-text:
+body:
 
     Hey {{ contact.full_name }}, try out our service by visiting:
     https://coolservice.com/. You could get {{ promo.percent_off }}% off
@@ -56,8 +67,14 @@ html:
     {% endblock %}
 ```
 
-Here the name we provided is associated with a subject, fallback text for if the HTML doesn't display, and the HTML itself. Notice the templating language at use: this is [Jinja2](http://jinja.pocoo.org/)'s syntax. The values we passed in earlier as `context` get dynamically evaluated for each of these items.
+Here the name we provided is associated with a subject, fallback text for if the HTML doesn't
+display, and the HTML itself. Notice the templating language at use: this is
+[Jinja2](http://jinja.pocoo.org/)'s syntax. The values we passed in earlier as `context` get
+dynamically evaluated for each of these items.
 
-The logic of `send_email_by_name` is very simple. The `subject`, `text`, and `HTML` template are all evaluated with the same context.
+The logic of `send_email_by_name` is very simple. The `subject`, `text`, and `HTML` template
+are all evaluated with the same context.
 
-Overall, this project makes the assumption that in sending emails programmatically, the subject, text, and html all *go together*, and thus there's no reason not to bundle this data and reference it as one item, in our case by the name of the email template.
+Overall, this project makes the assumption that in sending emails programmatically,
+the subject, text, and html all *go together*, and thus there's no reason not to bundle
+this data and reference it as one item, in our case by the name of the email template.

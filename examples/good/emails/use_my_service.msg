@@ -3,7 +3,7 @@ subject:
 
     The next cool service at {{ promo.percent_off }}% off!
 
-text:
+body:
 
     Hey {{ contact.full_name }}, try out our service by visiting:
     https://coolservice.com/. You could get {{ promo.percent_off }}% off
