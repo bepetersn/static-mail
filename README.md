@@ -9,7 +9,7 @@ code is commonplace, in the author's experience:
 
 ```python
 
-mail.reply(
+mail.send_message(
     to=[user.email],
     subject='The next cool service at {}% off!'.format(promo_percent_off=new_promo.percent_off),
     text=('Hey {}, try out our service by visiting: '
@@ -23,7 +23,7 @@ mail.reply(
 )
 ```
 
-Yuck. Let's try that again, but instead imagine an API that we want.
+Yuck. Let's try that again, but instead imagine an API that we would actually like to use.
 
 ```python
 
@@ -68,13 +68,13 @@ html:
 ```
 
 Here the name we provided is associated with a subject, fallback text for if the HTML doesn't
-display, and the HTML itself. Notice the templating language at use: this is
+display, and the HTML email itself. Notice the templating language at use: this is
 [Jinja2](http://jinja.pocoo.org/)'s syntax. The values we passed in earlier as `context` get
 dynamically evaluated for each of these items.
 
-The logic of `send_email_by_name` is very simple. The `subject`, `text`, and `HTML` template
-are all evaluated with the same context.
+The logic of `send_email_by_name` is simple. It looks in the `MESSAGE_DIR`, defined in the configuration object, for files ending in `.msg`. The `subject`, `body`, and `HTML` templates
+are taken from this file, and are all evaluated with the same context.
 
 Overall, this project makes the assumption that in sending emails programmatically,
-the subject, text, and html all *go together*, and thus there's no reason not to bundle
+the subject, body, and html all *go together*, and thus there's no reason not to bundle
 this data and reference it as one item, in our case by the name of the email template.
