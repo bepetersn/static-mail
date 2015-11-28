@@ -33,6 +33,8 @@ class TemplatedMail(object):
 
         template = self.env.get_template('{}.msg'.format(name))
         if template is not None:
-            self.mail.reply(recipients, **template.render(**context))
+            self.mail.send_message(
+                recipients=recipients,
+                **template.render(**context))
         else:
             self.logger.error('couldn\'t render a template.')
