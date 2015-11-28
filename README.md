@@ -1,10 +1,11 @@
 
-# Why This Project
+# Templated-Mail
+
+### Why This Project
 
 This project provides a simple interface for sending an email while keeping the email's definition
 --its text, subject, and html--out of the application logic as much as possible. The following code
-is taken from `examples/bad`, and represents what this package is intended to prevent. This kind of
-code is commonplace, in the author's experience:
+is taken from `examples/bad`, and represents what this package is intended to prevent:
 
 
 ```python
@@ -39,9 +40,9 @@ mail.send_email_by_name(
 
 ```
 
-# Defining email templates
+### Defining email templates
 
-So where is the email? All we've provided is a name. Taking a look in the
+All in all, this project makes the assumption that subject, text, and html all *go together*, and can be bundled, and referenced with a single name. So where is the email? Taking a look in the
 `emails/use_my_service.msg` file, we have the beginning of an answer:
 
 ```
@@ -70,29 +71,19 @@ html:
     {% endblock %}
 ```
 
-# How does it work?
+The name we provided is referencing a file with a `.msg` extension. It is associated with a subject, fallback body for if the HTML doesn't display, and the HTML email itself.
 
-Here the name we provided is associated with a subject, fallback text for if the
-HTML doesn't display, and the HTML email itself. Notice the templating language
-at use: this is [Jinja2](http://jinja.pocoo.org/)'s syntax. The values we passed
-in earlier as `context` get dynamically evaluated for each of these items.
+Notice the templating language at use: this is [Jinja2](http://jinja.pocoo.org/)'s syntax. The values we passed in earlier as `context` get dynamically evaluated for each of these items.
 
-The logic of `send_email_by_name` is simple. It looks in the `MESSAGE_DIR`,
-defined in the configuration object, for files ending in `.msg`. The `subject`,
-`body`, and `HTML` templates are taken from this file, and are all evaluated
+The logic of `send_email_by_name` is simple. It looks in the `MESSAGE_DIR`, defined in the configuration object, for files ending in `.msg`. The `subject`, `body`, and `HTML` templates are taken from this file, and are all evaluated
 with the same context.
 
-The templates support all of Jinja2's features, up to and including inheritance.
-If you want to use a base template, just put it in the same directory as
+The templates support all of Jinja2's features, up to and including inheritance. If you want to use a base template, just put it in the same directory as
 the emails.
 
-In case you were wondering, the syntax of the `.msg` files is a subclass of
-the .INI style, minus the need for sections. Keep in mind that lines that start
-a new key-value pair can't have any whitespace before the key. Other than that,
-go crazy with it.
+In case you were wondering, the syntax of the `.msg` files is a subclass of the .INI style, minus the need for sections. Keep in mind that lines that start a new key-value pair can't have any whitespace before the key. Other than that, go crazy with it.
 
-# Future
+### Future
 
-I was thinking of adding support for a `markdown` key to support that format,
-or possibly others, besides `subject`, `body`, and `text`. I also was
+I was thinking of adding support for a `markdown` key to support that format, or possibly others, besides `subject`, `body`, and `text`. I also was
 considering dropping the need for `body` at all, if you don't want it.
