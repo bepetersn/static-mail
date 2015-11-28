@@ -71,17 +71,13 @@ html:
     {% endblock %}
 ```
 
-The name we provided is referencing a file with a `.msg` extension. It is associated with a subject, fallback body for if the HTML doesn't display, and the HTML email itself.
-
-Notice the templating language at use: this is [Jinja2](http://jinja.pocoo.org/)'s syntax. The values we passed in earlier as `context` get dynamically evaluated for each of these items.
+The name we provided is referencing a file with a `.msg` extension. It is associated with a subject, fallback body for if the HTML doesn't display, and the HTML email itself. Notice the templating language at use: this is [Jinja2](http://jinja.pocoo.org/)'s syntax. The values we passed in earlier as `context` get dynamically evaluated for each of these items.
 
 The logic of `send_email_by_name` is simple. It looks in the `MESSAGE_DIR`, defined in the configuration object, for files ending in `.msg`. The `subject`, `body`, and `HTML` templates are taken from this file, and are all evaluated
 with the same context.
 
 The templates support all of Jinja2's features, up to and including inheritance. If you want to use a base template, just put it in the same directory as
-the emails.
-
-In case you were wondering, the syntax of the `.msg` files is a subclass of the .INI style, minus the need for sections. Keep in mind that lines that start a new key-value pair can't have any whitespace before the key. Other than that, go crazy with it.
+the emails. In case you were wondering, the syntax of the `.msg` files is a subclass of the .INI style, minus the need for sections. Keep in mind that lines that start a new key-value pair can't have any whitespace before the key. Other than that, go crazy with it.
 
 ### Future
 
