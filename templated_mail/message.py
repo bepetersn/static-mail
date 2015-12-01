@@ -1,5 +1,6 @@
 import bunch
 
+
 class Message:
 
     """

@@ -1,7 +1,8 @@
-from contextlib import contextmanager
-from jinja2.loaders import DictLoader, ChoiceLoader, FileSystemLoader
+import contextlib
+import jinja2
 
-class SubTemplateLoader(ChoiceLoader):
+
+class SubTemplateLoader(jinja2.ChoiceLoader):
 
     """
     A subclass of ChoiceLoader that takes a
@@ -15,8 +16,8 @@ class SubTemplateLoader(ChoiceLoader):
     def __init__(self, search_path):
         self.search_path = search_path
         super(SubTemplateLoader, self).__init__([
-            FileSystemLoader(search_path),
-            DictLoader({}),
+            jinja2.FileSystemLoader(search_path),
+            jinja2.DictLoader({}),
         ])
 
     @property
@@ -27,7 +28,7 @@ class SubTemplateLoader(ChoiceLoader):
     def extra(self, extra):
         self.loaders[1].mapping = extra
 
-    @contextmanager
+    @contextlib.contextmanager
     def add_templates(self, templates):
         try:
             self.extra = templates

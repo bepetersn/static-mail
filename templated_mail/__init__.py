@@ -1,7 +1,9 @@
-import simple_mail as mail
 import unittest.mock as mock
-from .message_loader import MessageLoader
-from .sub_template_loader import SubTemplateLoader
+
+import simple_mail as mail
+
+from templated_mail.message_loader import MessageLoader
+from templated_mail.sub_template_loader import SubTemplateLoader
 
 
 class TemplatedMail(object):

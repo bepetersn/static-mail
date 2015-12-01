@@ -1,7 +1,9 @@
-from functools import partial
+
 import os
-from jinja2 import Environment
-from simple_configparser import SimpleConfigParser
+import functools
+
+import jinja2
+import simple_configparser
 
 from templated_mail.sub_template_loader import SubTemplateLoader
 from templated_mail.message import Message
@@ -18,7 +20,9 @@ class MessageLoader(object):
     def __init__(self, config):
         self.config = config
         self.search_path = config.MESSAGE_DIR
-        self.message_class = partial(Message, Environment(
+        self.message_class = functools.partial(Message, jinja2.Environment(
+            # Pass the MESSAGE_DIR to sub-template loader
+            # so it can find templates for inheritance
             loader=SubTemplateLoader(
                 config.MESSAGE_DIR
             )
@@ -35,7 +39,7 @@ class MessageLoader(object):
 
         with open(os.path.join(self.search_path, '{}.msg'.format(name))) as f:
             try:
-                parser = SimpleConfigParser()
+                parser = simple_configparser.SimpleConfigParser()
                 parser.read_file(f)
                 return self.message_class(parser.items())
             except OSError:
