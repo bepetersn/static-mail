@@ -1,10 +1,10 @@
 
 from unittest import TestCase, mock
 from jinja2 import TemplateNotFound
-from templated_mail import DynamicLoader
+from templated_mail import SubTemplateLoader
 
 
-class TestDynamicLoader(TestCase):
+class TestSubTemplateLoader(TestCase):
 
     TEMPLATES = {
         'greeting': 'Hello {{ user.name }}! Hope you and {{ pet.name }} have a good day.',
@@ -13,7 +13,7 @@ class TestDynamicLoader(TestCase):
 
     def test_templates_added_are_available_in_context(self):
 
-        loader = DynamicLoader('/path/not/under/test')
+        loader = SubTemplateLoader('/path/not/under/test')
 
         self.assertRaises(TemplateNotFound, loader.get_source,
                           mock.Mock(), 'greeting')
