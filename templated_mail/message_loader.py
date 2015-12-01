@@ -37,11 +37,11 @@ class MessageLoader(object):
                      otherwise None.
         """
 
-        with open(os.path.join(self.search_path, '{}.msg'.format(name))) as f:
-            try:
+        try:
+            with open(os.path.join(self.search_path, '{}.msg'.format(name))) as f:
                 parser = simple_configparser.SimpleConfigParser()
                 parser.read_file(f)
                 return self.message_class(parser.items())
-            except OSError:
-                self.config.logger.error('couldn\'t find the file')
-                return None
+        except FileNotFoundError:
+            self.config.logger.error('couldn\'t find the file')
+            return None
