@@ -5,7 +5,7 @@ class Message:
 
     """
     Class responsible for encapsulating
-    multiple sub-templates, and when called,
+    multiple sub-templates, and when called for,
     getting them all rendered.
 
     `env` must have a loader that supports an
@@ -18,9 +18,23 @@ class Message:
 
     """
 
+    REQUIRED_SUB_TEMPLATES = (
+        'subject',
+        'body',
+        'html'
+    )
+
     def __init__(self, env, sub_templates):
         self.env = env
         self.sub_templates = sub_templates
+
+        # Messages must be initialized with all of the
+        # REQUIRED_SUB_TEMPLATES defined as keys.
+        assert len(self.REQUIRED_SUB_TEMPLATES) == len(list(filter(
+            lambda t: t in self.REQUIRED_SUB_TEMPLATES,
+            self.sub_templates.keys()
+        ))), 'Missing one of the required templates; only have: {}'.format(
+            list(self.sub_templates.keys()))
 
     def render_part(self, name, **context):
         """
