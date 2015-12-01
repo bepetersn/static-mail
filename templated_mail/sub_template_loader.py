@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from jinja2.loaders import DictLoader, ChoiceLoader, FileSystemLoader
 
-class DynamicLoader(ChoiceLoader):
+class SubTemplateLoader(ChoiceLoader):
 
     """
     A subclass of ChoiceLoader that takes a
@@ -14,7 +14,7 @@ class DynamicLoader(ChoiceLoader):
 
     def __init__(self, search_path):
         self.search_path = search_path
-        super(DynamicLoader, self).__init__([
+        super(SubTemplateLoader, self).__init__([
             FileSystemLoader(search_path),
             DictLoader({}),
         ])

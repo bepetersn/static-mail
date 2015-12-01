@@ -1,7 +1,7 @@
 import simple_mail as mail
 import unittest.mock as mock
 from .environment import MessageEnvironment
-from .loader import DynamicLoader
+from .sub_template_loader import SubTemplateLoader
 from .template import MessageTemplate
 
 
@@ -16,7 +16,7 @@ class TemplatedMail(object):
 
         self.config = config
         self.mail = mail.Mail(config)
-        self.env = MessageEnvironment(loader=DynamicLoader(
+        self.env = MessageEnvironment(loader=SubTemplateLoader(
             self.config.MESSAGE_DIR
         ))
         self.logger = logger if logger is not None else mock.Mock()
