@@ -1,8 +1,7 @@
 import simple_mail as mail
 import unittest.mock as mock
-from .environment import MessageEnvironment
+from .message_loader import MessageLoader
 from .sub_template_loader import SubTemplateLoader
-from .template import MessageTemplate
 
 
 class TemplatedMail(object):
@@ -15,11 +14,9 @@ class TemplatedMail(object):
         """
 
         self.config = config
+        self.config.logger = logger if logger is not None else mock.Mock()
         self.mail = mail.Mail(config)
-        self.env = MessageEnvironment(loader=SubTemplateLoader(
-            self.config.MESSAGE_DIR
-        ))
-        self.logger = logger if logger is not None else mock.Mock()
+        self.loader = MessageLoader(config)
 
     def send_email_by_name(self, name, recipients, context=None):
         """
@@ -31,10 +28,10 @@ class TemplatedMail(object):
 
         """
 
-        template = self.env.get_template('{}.msg'.format(name))
-        if template is not None:
+        msg = self.loader.get_message(name)
+        if msg is not None:
             self.mail.send_message(
                 recipients=recipients,
-                **template.render(**context))
+                **msg.render(**context))
         else:
-            self.logger.error('couldn\'t render a template.')
+            self.config.logger.error('couldn\'t render a template.')

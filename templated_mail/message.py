@@ -1,6 +1,6 @@
 import bunch
 
-class MessageTemplate:
+class Message:
 
     """
     Class responsible for encapsulating
