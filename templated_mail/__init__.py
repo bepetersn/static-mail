@@ -20,7 +20,7 @@ class TemplatedMail(object):
         self.mail = mail.Mail(config)
         self.loader = MessageLoader(config)
 
-    def send_email_by_name(self, name, recipients, context=None):
+    def send_message(self, name, recipients, context=None):
         """
             1) Build the email template of `name`, as found
             under the configured message directory.
