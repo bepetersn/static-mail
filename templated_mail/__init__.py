@@ -1,4 +1,8 @@
-import unittest.mock as mock
+
+try:
+    import unittest.mock as mock
+except:
+    import mock
 
 import simple_mail as mail
 
