@@ -20,9 +20,9 @@ class TemplatedMail(object):
         """
 
         self.config = config
-        self.config.logger = logger if logger is not None else mock.Mock()
+        self.logger = logger if logger is not None else mock.Mock()
         self.mail = mail.Mail(config)
-        self.loader = MessageLoader(config)
+        self.loader = MessageLoader(config, logger)
 
     def send_message(self, name, recipients, context=None):
         """

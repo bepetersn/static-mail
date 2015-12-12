@@ -17,8 +17,9 @@ class MessageLoader(object):
 
     """
 
-    def __init__(self, config):
+    def __init__(self, config, logger):
         self.config = config
+        self.logger = logger
         self.search_path = config.MESSAGE_DIR
         self.message_class = functools.partial(Message, jinja2.Environment(
             # Pass the MESSAGE_DIR to sub-template loader
@@ -43,5 +44,5 @@ class MessageLoader(object):
                 parser.read_file(f)
                 return self.message_class(parser.items())
         except FileNotFoundError:
-            self.config.logger.error('couldn\'t find the file')
+            self.logger.error('couldn\'t find the file')
             return None

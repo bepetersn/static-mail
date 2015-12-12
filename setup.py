@@ -19,5 +19,10 @@ setup(
         'templated_mail'
     ],
     install_requires=[
+        'simple_mail',
+        'mock',
+        'bunch',
+        'jinja2',
+        'simple_configparser'
     ],
 )
