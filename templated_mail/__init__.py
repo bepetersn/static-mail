@@ -22,7 +22,7 @@ class TemplatedMail(object):
         self.config = config
         self.logger = logger if logger is not None else mock.Mock()
         self.mail = mail.Mail(config)
-        self.loader = MessageLoader(config, logger)
+        self.loader = MessageLoader(config, self.logger)
 
     def send_message(self, name, recipients, context=None):
         """
