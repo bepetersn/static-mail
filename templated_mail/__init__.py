@@ -45,4 +45,4 @@ class TemplatedMail(object):
             )
 
         else:
-            self.config.logger.error('couldn\'t render a template.')
+            self.logger.error('couldn\'t render a template.')
