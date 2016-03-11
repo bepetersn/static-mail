@@ -35,8 +35,8 @@ class TemplatedMail(object):
         """
 
         msg = self.loader.get_message(name)
-        values = msg.render(**context)
         if msg is not None:
+            values = msg.render(**context)
             self.mail.send_message(
                 values.subject,
                 recipients,
