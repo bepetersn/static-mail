@@ -24,7 +24,8 @@ class TemplatedMail(object):
         self.mail = mail.Mail(config)
         self.loader = MessageLoader(config, self.logger)
 
-    def send_message(self, name, recipients, context=None):
+    def send_message(self, name, recipients, context=None,
+                     reply_to=None, cc=None, bcc=None):
         """
             1) Build the email template of `name`, as found
             under the configured message directory.
@@ -41,7 +42,9 @@ class TemplatedMail(object):
                 values.subject,
                 recipients,
                 values.body,
-                values.html
+                values.html,
+                reply_to=reply_to,
+                cc=cc, bcc=bcc
             )
 
         else:
