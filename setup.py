@@ -1,6 +1,8 @@
 """
-Package that allows defining email html and metadata
-in a template, and sending it by name.
+Package that allows defining an email subject, 
+plain text, & html in a template, thus keeping it 
+separate from application logic, and providing a 
+consistent way to interpolate data into it. 
 
 """
 
