@@ -11,7 +11,7 @@ import setuptools  # this import is needed so that some options and commands wor
 
 setup(
     name='templated-mail',
-    version='0.3.0.2',
+    version='0.3.0.3',
     author='Brian E. Peterson',
     author_email='bepetersondev@gmail.com',
     url='https://github.com/bepetersn/templated-mail',
@@ -21,7 +21,7 @@ setup(
         'templated_mail'
     ],
     install_requires=[
-        'simple_mail==0.1.5.0',
+        'simple_mail==0.1.5.1',
         'mock',
         'bunch',
         'jinja2',
