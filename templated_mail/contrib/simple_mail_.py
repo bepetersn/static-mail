@@ -1,12 +1,11 @@
 
 from .base import MailWrapper
 import contextlib
-import simple_mail
-
 
 class SimpleMailWrapper(MailWrapper):
 
     def __init__(self, config):
+        import simple_mail
         super(SimpleMailWrapper, self).__init__(config)
         self._mail = simple_mail.Mail(config)
 
