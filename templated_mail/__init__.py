@@ -1,3 +1,4 @@
+import contextlib
 
 try:
     import unittest.mock as mock
@@ -47,3 +48,7 @@ class TemplatedMail(object):
         else:
             self.logger.error('couldn\'t render a template.')
 
+    @contextlib.contextmanager
+    def connect(self):
+        with self.mail.connect():
+            yield
