@@ -4,7 +4,7 @@ try:
 except:
     import mock
 
-import contrib.simple_mail_ as mail
+import contrib.yag as mail
 from templated_mail.message_loader import MessageLoader
 from templated_mail.sub_template_loader import SubTemplateLoader
 
@@ -39,9 +39,11 @@ class TemplatedMail(object):
         msg = self.loader.get_message(name)
         if msg is not None:
             rendered = msg.render(**context)
+            rendered.html = rendered.html.replace('\n', '').strip()
             self.mail.send_message(
                 rendered, *args, **kwargs
             )
 
         else:
             self.logger.error('couldn\'t render a template.')
+
