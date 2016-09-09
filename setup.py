@@ -11,14 +11,15 @@ import setuptools  # this import is needed so that some options and commands wor
 
 setup(
     name='templated-mail',
-    version='0.4.0.0',
+    version='0.4.0.1',
     author='Brian E. Peterson',
     author_email='bepetersondev@gmail.com',
     url='https://github.com/bepetersn/templated-mail',
     zip_safe=False,
     description=__doc__,
     packages=[
-        'templated_mail'
+        'templated_mail',
+        'templated_mail.contrib'
     ],
     install_requires=[
         'yagmail',
