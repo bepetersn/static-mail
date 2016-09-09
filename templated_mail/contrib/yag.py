@@ -37,8 +37,8 @@ class YAGMailWrapper(MailWrapper):
         # Use the correct class depending on whether
         # it looks like TLS is being used; if not,
         # assume use of SSL & port 465
-        return (yagmail.SMTP if self._yag_config['port'] in
-                ('587', 587) else yagmail.SMTP_SSL)
+        return (yagmail.SMTP if int(self._yag_config['port']) == 587
+                else yagmail.SMTP_SSL)
 
     def _prepare_config(self):
 
