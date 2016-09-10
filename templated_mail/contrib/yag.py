@@ -138,8 +138,9 @@ class YAGmailWithConnecting(YAGMailWrapper):
                 self._connection = context_manager.__enter__()
             yield self._connection
 
-        except Exception:
+        except Exception as e:
             exc_info = (exc, exc_type, tb) = sys.exc_info()
+            raise e
 
         finally:
             if context_manager is not None:
