@@ -12,7 +12,7 @@ from templated_mail.sub_template_loader import SubTemplateLoader
 
 class TemplatedMail(object):
 
-    def __init__(self, config, logger=None):
+    def __init__(self, config, logger=None, mail_module=None):
         """
         Store config for the mail server,
         and the location of email templates.
@@ -21,7 +21,11 @@ class TemplatedMail(object):
 
         self.config = config
         self.logger = logger if logger is not None else mock.Mock()
-        self.mail = mail.Mail(config)
+        if mail_module == None:
+            self.mail = mail.Mail(config)
+        else:
+            self.mail = mail_module.Mail(config)
+
         self.loader = MessageLoader(config, self.logger)
 
     def send_message(self, name, recipients, context=None,
