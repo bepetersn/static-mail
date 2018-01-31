@@ -11,7 +11,7 @@ import setuptools  # this import is needed so that some options and commands wor
 
 setup(
     name='templated-mail',
-    version='0.3.0.3',
+    version='0.4.0.3',
     author='Brian E. Peterson',
     author_email='bepetersondev@gmail.com',
     url='https://github.com/bepetersn/templated-mail',
