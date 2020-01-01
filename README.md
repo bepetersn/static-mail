@@ -1,3 +1,5 @@
+This code is not working in its current state, but I'm leaving it aronud for now.
+
 
 # Templated-Mail
 
